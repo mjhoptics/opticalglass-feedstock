@@ -1,5 +1,5 @@
 {% set name = "opticalglass" %}
-{% set version = "1.2.0" %}
+{% set version = "2.0.0" %}
 {% set python_min = "3.12" %}
 
 package:
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: bee2328232e30c602dac68b093c6b304c698f788673378c1afcefb44de5c4c8f
+  sha256: 373209e9fd0cb0a8e169e7ac4bae1c4adbd43bc71141f1459fdd43e9fc88a9ca
 
 build:
-  number: 0
+  number: 2
   noarch: python
   entry_points:
     - glassmap = opticalglass.glassmapviewer:main
@@ -20,22 +20,23 @@ build:
 requirements:
   host:
     - pip
-    - pyscaffold >=4.3
-    - setuptools >=46.1.0
+    - setuptools >=83.0.0
     - setuptools-scm
     - python {{ python_min }}
   run:
     - python >={{ python_min }}
-    - numpy >=2.4.3
-    - scipy >=1.17.1
-    - matplotlib-base >=3.10.8
-    - pandas >=3.0.2
+    - zemaxglass >=2.0.0
+    - numpy >=2.5.1
+    - scipy >=1.18.0
+    - matplotlib-base >=3.11.0
+    - pandas >=3.0.3
     - xlrd >=2.0.2
     - openpyxl >=3.1.5
-    - requests >=2.33.1
+    - json_tricks >=3.17.3
+    - requests >=2.34.2
     - json_tricks >=3.17.3
     - pyyaml >=6.0.3
-    - pyside6 >=6.11.0
+    - pyside6 >=6.11.1
 
 test:
   imports:
@@ -48,17 +49,19 @@ test:
 
 about:
   home: https://pypi.org/project/opticalglass/
-  summary: Tools for reading commercial optical glass catalogs
+  summary: Tools for reading optical material catalogs and libraries
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
   description: |
-    opticalglass is a Python package to interface with optical glass
-    manufacturers glass data spreadsheets. It provides a neutral API
-    to query data from multiple catalogs as well as the RefractiveIndex.Info 
-    website. A Matplotlib graphical glass map display can be used 
-    from scripts and the Qt-based glassmap app is built on top of 
-    this capability.
+   OpticalGlass provides a common API for querying refractive index data and other properties to a number of different optical material data sources. These include:
+
+    * Excel spreadsheets published by optical glass manufacturers
+    * Zemax ANSI Glass Format (.agf) files
+    * The `RefractiveIndex.INFO <https://refractiveindex.info>`_ database
+
+   The global function `create_glass <https://opticalglass.readthedocs.io/en/latest/opticalglass.html#opticalglass.glassfactory.create_glass>`_ returns a `glass object <https://opticalglass.readthedocs.io/en/stable/opticalglass.html#opticalglass.opticalmedium.OpticalMedium>`_ given a glass name and, optionally, a catalog name. This glass instance can be queried for refractive index and transmittance values.
+
   doc_url: https://opticalglass.readthedocs.io/
   dev_url: https://github.com/mjhoptics/opticalglass
 
