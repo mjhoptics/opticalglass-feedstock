@@ -11,7 +11,7 @@ source:
   sha256: 373209e9fd0cb0a8e169e7ac4bae1c4adbd43bc71141f1459fdd43e9fc88a9ca
 
 build:
-  number: 1
+  number: 2
   noarch: python
   entry_points:
     - glassmap = opticalglass.glassmapviewer:main
@@ -25,6 +25,7 @@ requirements:
     - python {{ python_min }}
   run:
     - python >={{ python_min }}
+    - zemaxglass >=2.0.0
     - numpy >=2.5.1
     - scipy >=1.18.0
     - matplotlib-base >=3.11.0
