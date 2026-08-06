@@ -1,35 +1,40 @@
-{% set name = "opticalglass" %}
-{% set version = "2.0.0" %}
-{% set python_min = "3.12" %}
+schema_version: 1
+
+context:
+  name: opticalglass
+  version: "2.0.1"
+  python_min: "3.12"
+  build_number: 0
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 373209e9fd0cb0a8e169e7ac4bae1c4adbd43bc71141f1459fdd43e9fc88a9ca
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 6cade5fcdcf27b0bf640b3065525814b8679cf7668f161fbb6ba0dec9080ad4d
 
 build:
-  number: 2
+  number: ${{ build_number }}
   noarch: python
-  entry_points:
-    - glassmap = opticalglass.glassmapviewer:main
-  script: {{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install .
+  python:
+    entry_points:
+      - glassmap = opticalglass.glassmapviewer:main
 
 requirements:
   host:
-    - pip
+    - python ${{ python_min }}.*
     - setuptools >=83.0.0
     - setuptools-scm
-    - python {{ python_min }}
+    - pip
   run:
-    - python >={{ python_min }}
+    - python >=${{ python_min }}
     - zemaxglass >=2.0.0
     - numpy >=2.5.1
     - scipy >=1.18.0
-    - matplotlib-base >=3.11.0
-    - pandas >=3.0.3
+    - matplotlib-base >=3.11.1
+    - pandas >=3.0.5
     - xlrd >=2.0.2
     - openpyxl >=3.1.5
     - json_tricks >=3.17.3
@@ -38,21 +43,21 @@ requirements:
     - pyyaml >=6.0.3
     - pyside6 >=6.11.1
 
-test:
-  imports:
-    - opticalglass
-  commands:
-    - pip check
-  requires:
-    - pip
-    - python {{ python_min }}
+tests:
+  - python:
+      imports:
+        - opticalglass
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
-  home: https://pypi.org/project/opticalglass/
   summary: Tools for reading optical material catalogs and libraries
   license: BSD-3-Clause
-  license_family: BSD
   license_file: LICENSE
+  homepage: https://pypi.org/project/opticalglass/
+  documentation: https://opticalglass.readthedocs.io/
   description: |
    OpticalGlass provides a common API for querying refractive index data and other properties to a number of different optical material data sources. These include:
 
@@ -62,8 +67,7 @@ about:
 
    The global function `create_glass <https://opticalglass.readthedocs.io/en/latest/opticalglass.html#opticalglass.glassfactory.create_glass>`_ returns a `glass object <https://opticalglass.readthedocs.io/en/stable/opticalglass.html#opticalglass.opticalmedium.OpticalMedium>`_ given a glass name and, optionally, a catalog name. This glass instance can be queried for refractive index and transmittance values.
 
-  doc_url: https://opticalglass.readthedocs.io/
-  dev_url: https://github.com/mjhoptics/opticalglass
+  repository: https://github.com/mjhoptics/opticalglass
 
 extra:
   recipe-maintainers:
