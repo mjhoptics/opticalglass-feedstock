@@ -7,28 +7,29 @@ Home: https://pypi.org/project/opticalglass/
 
 Package license: BSD-3-Clause
 
-Summary: Tools for reading commercial optical glass catalogs
+Summary: Tools for reading optical material catalogs and libraries
 
 Development: https://github.com/mjhoptics/opticalglass
 
 Documentation: https://opticalglass.readthedocs.io/
 
-opticalglass is a Python package to interface with optical glass
-manufacturers glass data spreadsheets. It provides a neutral API
-to query data from multiple catalogs as well as the RefractiveIndex.Info
-website. A Matplotlib graphical glass map display can be used
-from scripts and the Qt-based glassmap app is built on top of
-this capability.
+OpticalGlass provides a common API for querying refractive index data and other properties to a number of different optical material data sources. These include:
 
+ * Excel spreadsheets published by optical glass manufacturers
+ * Zemax ANSI Glass Format (.agf) files
+ * The `RefractiveIndex.INFO <https://refractiveindex.info>`_ database
+
+The global function `create_glass <https://opticalglass.readthedocs.io/en/latest/opticalglass.html#opticalglass.glassfactory.create_glass>`_ returns a `glass object <https://opticalglass.readthedocs.io/en/stable/opticalglass.html#opticalglass.opticalmedium.OpticalMedium>`_ given a glass name and, optionally, a catalog name. This glass instance can be queried for refractive index and transmittance values.
 
 Current build status
 ====================
 
 
-<table><tr><td>All platforms:</td>
+<table><tr>
+    <td>All platforms:</td>
     <td>
-      <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=11115&branchName=main">
-        <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/opticalglass-feedstock?branchName=main">
+      <a href="https://github.com/conda-forge/opticalglass-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/opticalglass-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
       </a>
     </td>
   </tr>
@@ -51,31 +52,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `opticalglass` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda install opticalglass
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba install opticalglass
 ```
 
-It is possible to list all of the versions of `opticalglass` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add opticalglass
+# for installing globally
+pixi global install opticalglass
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `opticalglass` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search opticalglass --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search opticalglass --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search opticalglass --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -87,6 +130,8 @@ mamba repoquery whoneeds opticalglass --channel conda-forge
 # List dependencies of `opticalglass`:
 mamba repoquery depends opticalglass --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge
@@ -110,12 +155,12 @@ it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
-To manage the continuous integration and simplify feedstock maintenance
+To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
-For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
+For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -142,7 +187,7 @@ merged, the recipe will be re-built and uploaded automatically to the
 everybody to install and use from the `conda-forge` channel.
 Note that all branches in the conda-forge/opticalglass-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
-on branches in forks and branches in the main repository should only be used to
+on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
